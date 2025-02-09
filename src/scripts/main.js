@@ -14,13 +14,19 @@ document.addEventListener('click', (e) => {
     return;
   }
 
-  // Obliczamy odległości (odstępy) od krawędzi ściany do środka pająka
-  const topGap = wall.offsetTop + wall.clientTop + spider.clientHeight / 2;
-  const leftGap = wall.offsetLeft + wall.clientLeft + spider.clientWidth / 2;
+  // Uzyskujemy dokładne współrzędne ściany względem widoku
+  const wallRect = wall.getBoundingClientRect();
+
+  // Uzyskujemy wymiary pająka
+  const spiderRect = spider.getBoundingClientRect();
+
+  // Obliczamy odległość do ściany (od krawędzi ściany do środka pająka)
+  const topGap = wallRect.top + spiderRect.height / 2;
+  const leftGap = wallRect.left + spiderRect.width / 2;
 
   // Ustalanie ograniczeń ruchu pająka wewnątrz ściany
-  const topLimit = wall.clientHeight - spider.clientHeight;
-  const leftLimit = wall.clientWidth - spider.clientWidth;
+  const topLimit = wallRect.height - spiderRect.height;
+  const leftLimit = wallRect.width - spiderRect.width;
 
   // Obliczamy pozycję pająka w oparciu o położenie kliknięcia
   let y = e.clientY - topGap;
